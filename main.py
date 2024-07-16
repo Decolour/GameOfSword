@@ -85,3 +85,5 @@ def fight(attacking, defending):
             print(f"{defending.name} победил {attacking.name}")
 
 fight(Vanya, Babay)
+fight(Ilyusha, Byaka)
+fight(Petrovich, Babay)
