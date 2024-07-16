@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-#добавление класса random для создания случайного числа удачи в заданном диапазоне:
 import random
 
 class Warrior:
@@ -7,25 +6,21 @@ class Warrior:
         self.luck = luck
         self.weapon = weapon
 
-
-
-class Fighter:
-    def __init__(self, luck, weapon, name, Strength, Defense, Health):
-        self.luck = luck
+class Fighter(Warrior):
+    def __init__(self, name, luck, weapon, Strength, Defense, Health):
+        super().__init__(luck, weapon)
         self.name = name
         self.Strength = Strength
         self.Defense = Defense
         self.Health = Health
-        self.weapon = weapon
 
-class Monster:
-    def __init__(self, luck, weapon, name, Strength, Defense, Health):
-        self.luck = luck
+class Monster(Warrior):
+    def __init__(self, name, luck, weapon, Strength, Defense, Health):
+        super().__init__(luck, weapon)
         self.name = name
         self.Strength = Strength
         self.Defense = Defense
         self.Health = Health
-        self.weapon = weapon
 
 class Weapon(ABC):
     def __init__(self, name, damage):
@@ -36,41 +31,44 @@ class Weapon(ABC):
     def attack(self):
         pass
 
-
 class Sword(Weapon):
-    def __init__ (self, name, damage, weight):
-        self.name = name
-        self.damage = damage
+    def __init__(self, name, damage, weight):
+        super().__init__(name, damage)
         self.weight = weight
+
     def attack(self):
         print("Sword attack")
 
 class Axe(Weapon):
+    def __init__(self, name, damage):
+        super().__init__(name, damage)
+
     def attack(self):
         print("Axe attack")
 
-
 class Dagger(Weapon):
+    def __init__(self, name, damage):
+        super().__init__(name, damage)
+
     def attack(self):
         print("Dagger attack")
 
+# Создание объектов оружия
+Kladinec = Sword("Кладинец", 10, 10) # Create a sword object
+Fang = Dagger("Клык", 5) # Create a dagger object
+Kirdyk = Axe("Кирдык", 7) # Create an axe object
 
-
+# Создание объектов бойцов и монстров
 Vanya = Fighter("Ваня", 4, Kladinec, 10, 11, 100) # Create a fighter object
 Ilyusha = Fighter("Илюша", 7, Kirdyk, 15, 7, 70) # Create a fighter object
 Petrovich = Fighter("Петрович", 15, Fang, 7, 10, 50) # Create a fighter object
 
-Babay = Monster("Бабай", 10, 10, 40) # Create a monster object
-Byaka = Monster("Бяка", 5, 6, 60) # Create a monster object
+Babay = Monster("Бабай", 10, Kladinec, 10, 10, 40) # Create a monster object
+Byaka = Monster("Бяка", 5, Fang, 6, 5, 60) # Create a monster object
 
-Paw = Weapon("Лапа", 5) # Create a weapon object
-Kladinec = Sword("Кладинец", 10, 10) # Create a sword object
-Fang = Dagger("Клык", 5, 5) # Create a dagger object
-Kirdyk = Axe("Кирдык", 7, 7) # Create a axe object
-
-def damage_calculation(Attacking, Defending):
-    damage = weapon.damage + Attacking.Strength - Defending.Defense + random.randint(0, 10) * attacking.luck
-    return damage
+def damage_calculation(attacking, defending):
+    damage = attacking.weapon.damage + attacking.Strength - defending.Defense + random.randint(0, 10) * attacking.luck
+    return max(damage, 0)  # Чтобы не было отрицательного урона
 
 def fight(attacking, defending):
     while attacking.Health > 0 and defending.Health > 0:
@@ -85,6 +83,5 @@ def fight(attacking, defending):
         print(f"{defending.name} наносит {damage} урона {attacking.name}")
         if attacking.Health <= 0:
             print(f"{defending.name} победил {attacking.name}")
-
 
 fight(Vanya, Babay)
