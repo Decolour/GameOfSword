@@ -95,5 +95,4 @@ def fight(attacking, defending):
 
 fight(Vanya, Babay)
 fight(Ilyusha, Byaka)
-
 fight(Petrovich, Babay)
