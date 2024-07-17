@@ -71,10 +71,14 @@ def damage_calculation(attacking, defending):
     return max(damage, 0)  # Чтобы не было отрицательного урона
 
 def fight(attacking, defending):
+    # Сохранение начальных значений
+    initial_attacking_health = attacking.Health
+    initial_defending_health = defending.Health
+
     while attacking.Health > 0 and defending.Health > 0:
         damage = damage_calculation(attacking, defending)
         defending.Health -= damage
-        print(f"{attacking.name} наносит {damage} урона {defending.name}")
+        print(f"{attacking.name} наносит {damage} урона оружием {attacking.weapon.name} персонажу {defending.name}")
         if defending.Health <= 0:
             print(f"{attacking.name} победил {defending.name}")
             break
@@ -84,6 +88,12 @@ def fight(attacking, defending):
         if attacking.Health <= 0:
             print(f"{defending.name} победил {attacking.name}")
 
+        # Сброс параметров объектов до начальных значений
+    attacking.Health = initial_attacking_health
+    defending.Health = initial_defending_health
+
+
 fight(Vanya, Babay)
 fight(Ilyusha, Byaka)
+
 fight(Petrovich, Babay)
